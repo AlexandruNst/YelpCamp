@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
-const Campground = require("./models/campground")
+const Campground = require("./models/campground");
+const ejsMate = require("ejs-mate");
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
     .then(() => console.log("Mongo connection open"))
     .catch(err => console.log(err))
 
+app.engine("ejs", ejsMate);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
