@@ -28,8 +28,6 @@ const MongoStore = require("connect-mongo");
 const dbURL = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
-//'mongodb://127.0.0.1:27017/yelp-camp'
-console.log(dbURL);
 mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Mongo connection open"))
     .catch(err => console.log(err))
@@ -150,5 +148,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(3000, () => {
-    console.log("Serving on port 3000");
+    console.log("Serving.");
 })
