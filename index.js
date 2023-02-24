@@ -22,19 +22,22 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const mongoSanitize = require("express-mongo-sanitize");
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
     .then(() => console.log("Mongo connection open"))
     .catch(err => console.log(err))
 
 const sessionConfig = {
+    name: "session",
     secret: "thisshouldbeabettersecret",
     resave: false,
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true
+        httpOnly: true,
+        // secure: true
     }
 }
 
@@ -43,6 +46,7 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(mongoSanitize());
 app.use(express.urlencoded());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
